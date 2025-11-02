@@ -9,7 +9,7 @@
     "newArchEnabled": true,
     "scheme": "swubot",
     "splash": {
-      "image": "./assets/images/splash.png",
+      "image": "./assets/images/icon.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -18,9 +18,9 @@
     ],
 
     "ios": {
-      "bundleIdentifier": "com.standwithus.swubot",
+      "bundleIdentifier": "com.standwithus.swubot2",
       "supportsTablet": true,
-      "buildNumber": "43",
+      "buildNumber": "44",
       "infoPlist": {
         "NSCameraUsageDescription": "Camera is used only for user-uploaded content or QR scanning.",
         "NSPhotoLibraryUsageDescription": "Used for selecting profile or chat-related images.",
@@ -29,7 +29,7 @@
     },
 
     "android": {
-      "package": "com.standwithus.swubot",
+      "package": "com.standwithus.swubot2",
       "versionCode": 9,
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/icon.png",
@@ -47,20 +47,11 @@
     "plugins": [
       "expo-router",
       "expo-font",
-      "expo-web-browser",
-      [
-        "expo-build-properties",
-        {
-          "ios": {
-            "useFrameworks": "static"
-          }
-        }
-      ]
+      "expo-web-browser"
     ],
 
     "extra": {
       "eas": {
-        "projectId": "REPLACE_WITH_YOUR_EAS_PROJECT_ID"
       }
     },
 
