@@ -2,7 +2,7 @@
   "expo": {
     "name": "SWUBot",
     "slug": "swubot",
-    "version": "42.0.1",
+    "version": "42.0.2",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "userInterfaceStyle": "light",
@@ -14,7 +14,7 @@
     "ios": {
       "bundleIdentifier": "com.standwithus.swubot",
       "supportsTablet": true,
-      "buildNumber": "45",
+      "buildNumber": "46",
       "infoPlist": {
         "NSCameraUsageDescription": "Camera is used only for user-uploaded content or QR scanning.",
         "NSPhotoLibraryUsageDescription": "Used for selecting profile or chat-related images.",

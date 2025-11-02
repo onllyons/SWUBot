@@ -16,30 +16,37 @@ export default function ProfileScreen() {
     return unsubscribe;
   }, []);
 
-  const handleLogout = async () => {
-    await signOut(auth);
-    router.replace('/login');
-  };
-
   const handleBack = () => {
     router.back();
   };
 
-if (!user) {
-  return (
-    <View style={styles.loadingContainer}>
-      <Text style={styles.loadingText}>You are not logged in.</Text>
-      <TouchableOpacity onPress={() => router.replace('/login')} style={styles.backButton}>
-        <Text style={styles.backText}>Go to Login</Text>
-      </TouchableOpacity>
 
-      <TouchableOpacity style={styles.backButton} onPress={handleBack}>
-        <Text style={styles.backText}>Back</Text>
-      </TouchableOpacity>
-        
-    </View>
-  );
-}
+  const handleLogout = async () => {
+    try {
+      await signOut(auth);
+      setTimeout(() => {
+        router.replace('/login');
+      }, 300); // 0.3 secunde pauză
+    } catch (error) {
+      console.log('Logout error:', error);
+    }
+  };
+
+  if (!user) {
+    return (
+      <View style={styles.loadingContainer}>
+        <Text style={styles.loadingText}>You are not logged in.</Text>
+        <TouchableOpacity onPress={() => router.replace('/login')} style={styles.backButton}>
+          <Text style={styles.backText}>Go to Login</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity style={styles.backButton} onPress={handleBack}>
+          <Text style={styles.backText}>Back</Text>
+        </TouchableOpacity>
+          
+      </View>
+    );
+  }
 
 
   return (

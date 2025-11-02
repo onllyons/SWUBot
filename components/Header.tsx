@@ -7,8 +7,18 @@ export default function Header() {
   const router = useRouter();
 
   const handleBackPress = () => {
-    router.back();
+    try {
+      if (router && typeof router.back === 'function') {
+        router.back();
+      } else {
+        router.replace('/home');
+      }
+    } catch (error) {
+      router.replace('/home');
+    }
   };
+
+
 
   return (
     <View style={styles.header}>

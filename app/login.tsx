@@ -38,6 +38,10 @@ export default function LoginScreen() {
     Linking.openURL('https://botdelete.paperform.co/');
   };
 
+  const handleCreateProfile = () => {
+    router.push('/register');
+  };
+
   // const handleForgotPasswordPress = () => {
   //   router.push('/forgot-password');
   // };
@@ -47,7 +51,6 @@ export default function LoginScreen() {
       style={styles.container}
       behavior={Platform.OS === 'ios' ? 'padding' : undefined}
     >
-      <Header />
       <ScrollView
         contentContainerStyle={styles.scrollContent}
         showsVerticalScrollIndicator={false}
@@ -88,11 +91,20 @@ export default function LoginScreen() {
 
             <TouchableOpacity
               style={styles.forgotPasswordContainer}
+              onPress={handleCreateProfile}
+              activeOpacity={0.7}
+            >
+              <Text style={styles.forgotPasswordText}>Create new profile</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={styles.forgotPasswordContainer}
               onPress={handleForgotPasswordPress}
               activeOpacity={0.7}
             >
               <Text style={styles.forgotPasswordText}>Forgot password?</Text>
             </TouchableOpacity>
+
           </View>
         </View>
       </ScrollView>
@@ -103,6 +115,7 @@ export default function LoginScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    paddingTop: SPACING.xxl,
     backgroundColor: COLORS.background,
   },
   scrollContent: {
