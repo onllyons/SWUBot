@@ -1,0 +1,23 @@
+# Node
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# Expo & EAS
+.expo/
+.expo-shared/
+dist/
+web-build/
+build/
+*.tar.gz
+
+# macOS / system
+.DS_Store
+.idea/
+.vscode/
+.env
+.env.local
+
+# Temporary
+*.log
+*.tmp
