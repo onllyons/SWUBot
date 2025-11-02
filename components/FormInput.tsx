@@ -23,13 +23,13 @@ export default function FormInput({ label, error, style, ...props }: FormInputPr
 const styles = StyleSheet.create({
   container: {
     width: '100%',
-    marginBottom: SPACING.md,
+    marginBottom: SPACING.sm,
   },
   label: {
-    fontSize: 14,
+    fontSize: 17,
     fontWeight: '500',
     color: COLORS.text,
-    marginBottom: SPACING.xs,
+    marginBottom: 3,
   },
   input: {
     width: '100%',

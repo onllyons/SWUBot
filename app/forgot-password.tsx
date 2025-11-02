@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView, KeyboardAvoidingView, Platform } from 'react-native';
 import { useState } from 'react';
 import { useRouter } from 'expo-router';
 import Header from '@/components/Header';
@@ -18,7 +18,10 @@ export default function ForgotPasswordScreen() {
   };
 
   return (
-    <View style={styles.container}>
+    <KeyboardAvoidingView
+      style={styles.container}
+      behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+    >
       <Header />
       <ScrollView
         contentContainerStyle={styles.scrollContent}
@@ -60,7 +63,7 @@ export default function ForgotPasswordScreen() {
           </View>
         </View>
       </ScrollView>
-    </View>
+    </KeyboardAvoidingView>
   );
 }
 
@@ -77,7 +80,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: SPACING.lg,
     paddingTop: SPACING.lg,
     paddingBottom: SPACING.xl,
-    justifyContent: 'center',
   },
   title: {
     fontSize: 32,
@@ -96,7 +98,6 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     width: '100%',
-    alignItems: 'center',
     marginTop: SPACING.md,
   },
   backToSignInContainer: {
@@ -104,8 +105,8 @@ const styles = StyleSheet.create({
     marginTop: SPACING.lg,
   },
   backToSignInText: {
-    fontSize: 14,
-    fontWeight: '600',
+    fontSize: 17,
+    fontWeight: '500',
     color: COLORS.primary,
   },
 });

@@ -2,59 +2,51 @@
   "expo": {
     "name": "SWUBot",
     "slug": "swubot",
-    "version": "42.0.0",
+    "version": "42.0.1",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "userInterfaceStyle": "light",
     "newArchEnabled": true,
     "scheme": "swubot",
-    "splash": {
-      "image": "./assets/images/icon.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
-    },
     "assetBundlePatterns": [
       "**/*"
     ],
-
     "ios": {
-      "bundleIdentifier": "com.standwithus.swubot2",
+      "bundleIdentifier": "com.standwithus.swubot",
       "supportsTablet": true,
-      "buildNumber": "44",
+      "buildNumber": "45",
       "infoPlist": {
         "NSCameraUsageDescription": "Camera is used only for user-uploaded content or QR scanning.",
         "NSPhotoLibraryUsageDescription": "Used for selecting profile or chat-related images.",
-        "NSUserTrackingUsageDescription": "Tracking Usage: Web viewer is used to present the SWUbot in its iframe, so user can access and chat with it, no other tracking is done in this app."
+        "NSUserTrackingUsageDescription": "Tracking Usage: Web viewer is used to present the SWUbot in its iframe, so user can access and chat with it, no other tracking is done in this app.",
+        "ITSAppUsesNonExemptEncryption": false
       }
     },
-
     "android": {
       "package": "com.standwithus.swubot2",
-      "versionCode": 9,
+      "versionCode": 10,
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/icon.png",
         "backgroundColor": "#ffffff"
       },
       "permissions": []
     },
-
     "web": {
       "bundler": "metro",
       "output": "single",
       "favicon": "./assets/images/favicon.png"
     },
-
     "plugins": [
       "expo-router",
       "expo-font",
       "expo-web-browser"
     ],
-
     "extra": {
       "eas": {
-      }
+        "projectId": "303ebf10-1d70-472b-8855-359a02add917"
+      },
+      "router": {}
     },
-
     "updates": {
       "fallbackToCacheTimeout": 0
     }

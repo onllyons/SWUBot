@@ -15,9 +15,8 @@ export default function Header() {
       <TouchableOpacity
         style={styles.backButton}
         onPress={handleBackPress}
-        activeOpacity={0.7}
       >
-        <ArrowLeft color={COLORS.primary} size={24} />
+        <ArrowLeft color={COLORS.primary} size={30} />
       </TouchableOpacity>
     </View>
   );
@@ -26,8 +25,8 @@ export default function Header() {
 const styles = StyleSheet.create({
   header: {
     paddingHorizontal: SPACING.md,
-    paddingVertical: SPACING.md,
-    paddingTop: Platform.OS === 'ios' ? SPACING.xxl + SPACING.md : SPACING.md,
+    // paddingVertical: SPACING.md,
+    paddingTop: Platform.OS === 'ios' ? SPACING.xxl + SPACING.xs : SPACING.md,
     backgroundColor: COLORS.background,
   },
   backButton: {

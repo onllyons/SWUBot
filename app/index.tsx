@@ -1,16 +1,18 @@
+import { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, Image, ScrollView, TouchableOpacity } from 'react-native';
 import { useRouter } from 'expo-router';
 import GradientButton from '@/components/GradientButton';
 import { COLORS, SPACING, BORDER_RADIUS } from '@/constants/theme';
+import * as Linking from 'expo-linking';
+import { onAuthStateChanged } from 'firebase/auth';
+import { auth } from '../firebaseConfig';
 
 export default function HomeScreen() {
+  const [user, setUser] = useState(null);
   const router = useRouter();
 
   const handleSWUBotPress = () => {
     router.push('/swubot');
-  };
-
-  const handleDonatePress = () => {
   };
 
   const handleRegisterPress = () => {
@@ -20,6 +22,26 @@ export default function HomeScreen() {
   const handleLoginPress = () => {
     router.push('/login');
   };
+
+  const handleDonatePress = () => {
+    Linking.openURL('https://standwithus.com/donate/');
+  };
+
+  const stand_with_us = () => {
+    Linking.openURL('https://linktr.ee/stand_with_us');
+  };
+
+  const handleProfilePress = () => {
+    router.push('/profile');
+  };
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+    });
+    return unsubscribe;
+  }, []);
+
 
   return (
     <View style={styles.container}>
@@ -34,39 +56,72 @@ export default function HomeScreen() {
               style={styles.image}
               resizeMode="contain"
             />
-
-
             <Text style={styles.title}>Hi, I'm SWUBot</Text>
-            <Text style={styles.subtitle}>Powered by StandWithUs</Text>
+
+            <Text style={styles.subtitle}>Powered by</Text>
+            <Image
+              source={require('../assets/images/standUs.png')}
+              style={styles.standUs}
+              resizeMode="contain"
+            />
 
             <View style={styles.buttonsContainer}>
-              <GradientButton
-                title="SWUBot"
-                onPress={handleSWUBotPress}
-                size="large"
-              />
-              <GradientButton
-                title="Donate"
-                onPress={handleDonatePress}
-                size="large"
-              />
-
-              <View style={styles.secondaryButtonsRow}>
-                <TouchableOpacity
-                  style={styles.secondaryButton}
-                  onPress={handleRegisterPress}
-                  activeOpacity={0.7}
-                >
-                  <Text style={styles.secondaryButtonText}>Register</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  style={styles.secondaryButton}
-                  onPress={handleLoginPress}
-                  activeOpacity={0.7}
-                >
-                  <Text style={styles.secondaryButtonText}>Login</Text>
-                </TouchableOpacity>
+              <View style={styles.gap}>
+                <GradientButton
+                  title="SWUBot"
+                  onPress={handleSWUBotPress}
+                  size="large"
+                />
+                <GradientButton
+                  title="Support our Work"
+                  onPress={handleDonatePress}
+                  size="large"
+                />
+                <GradientButton
+                  title="Follow Us"
+                  onPress={stand_with_us}
+                  size="large"
+                />
               </View>
+
+              {!user && (
+                <View style={styles.secondaryButtonsRow}>
+                  <TouchableOpacity
+                    style={styles.secondaryButton}
+                    onPress={handleRegisterPress}
+                    activeOpacity={0.7}
+                  >
+                    <Text style={styles.secondaryButtonText}>Register</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    style={styles.secondaryButton}
+                    onPress={handleLoginPress}
+                    activeOpacity={0.7}
+                  >
+                    <Text style={styles.secondaryButtonText}>Login</Text>
+                  </TouchableOpacity>
+                </View>
+              )}
+
+              <TouchableOpacity
+                onPress={handleProfilePress}
+                style={[{ marginTop: 20 }, styles.test]}
+              >
+                <Text style={styles.deleteLink}>My Profile</Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity style={styles.test} onPress={() => Linking.openURL('https://botdelete.paperform.co/')}>
+                <Text style={styles.linkText}>Delete Account</Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity style={styles.test} onPress={() => Linking.openURL('https://docs.google.com/document/d/1KGLF27e2W_CLrBDOLuns5wnyoZyWyiW0MhArbOOz0Ao/edit?usp=sharing')}>
+                <Text style={styles.linkText}>Privacy Policy</Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity style={styles.test} onPress={() => Linking.openURL('https://docs.google.com/forms/d/e/1FAIpQLSfLaKKmX7IY6anjbTe1nBS5H7WyUqeWNFQ8xhId8agmOY_mHA/formResponse')}>
+                <Text style={styles.linkText}>User Data Deletion</Text>
+              </TouchableOpacity>
+
             </View>
           </View>
         </View>
@@ -110,24 +165,32 @@ const styles = StyleSheet.create({
   image: {
     width: 120,
     height: 120,
-    marginBottom: SPACING.xl,
+    marginBottom: SPACING.xs,
+  },
+  standUs: {
+    width: '100%',
+    height: 25,
+    // backgroundColor: 'red',
+    marginBottom: SPACING.xxl,
   },
   title: {
     fontSize: 28,
-    fontWeight: '700',
+    fontWeight: '300',
     color: COLORS.text,
     marginBottom: SPACING.xs,
     textAlign: 'center',
   },
   subtitle: {
-    fontSize: 15,
-    color: COLORS.textSecondary,
-    marginBottom: SPACING.xxl,
+    fontSize: 17,
+    color: COLORS.text,
+    fontWeight: 400,
     textAlign: 'center',
   },
   buttonsContainer: {
     width: '100%',
     alignItems: 'stretch',
+  },
+  gap: {
     gap: SPACING.sm,
   },
   secondaryButtonsRow: {
@@ -136,6 +199,7 @@ const styles = StyleSheet.create({
     gap: SPACING.sm,
     marginTop: SPACING.md,
   },
+
   secondaryButton: {
     flex: 1,
     paddingVertical: 11,
@@ -146,8 +210,26 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   secondaryButtonText: {
-    fontSize: 15,
+    fontSize: 17,
     fontWeight: '500',
     color: COLORS.primary,
   },
+  deleteLink: {
+    color: COLORS.primary,
+    fontWeight: '300',
+    fontSize: 16,
+    textAlign: 'center',
+    marginTop: 10,
+  },
+  linkText: {
+    color: COLORS.primary,
+    fontSize: 16,
+    fontWeight: '300',
+    textAlign: 'center',
+    marginTop: 0,
+  },
+  test: {
+    marginBottom: 4,
+  },
+
 });

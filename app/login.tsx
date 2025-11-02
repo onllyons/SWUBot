@@ -1,6 +1,11 @@
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, KeyboardAvoidingView, Platform, ScrollView } from 'react-native';
 import { useState } from 'react';
 import { useRouter } from 'expo-router';
+
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import { auth } from '../firebaseConfig';
+
+import * as Linking from 'expo-linking';
 import Header from '@/components/Header';
 import FormInput from '@/components/FormInput';
 import Button from '@/components/Button';
@@ -11,15 +16,37 @@ export default function LoginScreen() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleLogin = () => {
+  const handleLogin = async () => {
+    if (!email || !password) {
+      alert('Please enter email and password');
+      return;
+    }
+
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+      alert('Login successful!');
+      router.replace('/swubot'); // sau pagina principală după login
+    } catch (error) {
+      if (error.code === 'auth/invalid-email') alert('Invalid email');
+      else if (error.code === 'auth/user-not-found') alert('User not found');
+      else if (error.code === 'auth/wrong-password') alert('Wrong password');
+      else alert('Login failed: ' + error.message);
+    }
   };
 
   const handleForgotPasswordPress = () => {
-    router.push('/forgot-password');
+    Linking.openURL('https://botdelete.paperform.co/');
   };
 
+  // const handleForgotPasswordPress = () => {
+  //   router.push('/forgot-password');
+  // };
+
   return (
-    <View style={styles.container}>
+    <KeyboardAvoidingView
+      style={styles.container}
+      behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+    >
       <Header />
       <ScrollView
         contentContainerStyle={styles.scrollContent}
@@ -69,7 +96,7 @@ export default function LoginScreen() {
           </View>
         </View>
       </ScrollView>
-    </View>
+    </KeyboardAvoidingView>
   );
 }
 
@@ -86,7 +113,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: SPACING.lg,
     paddingTop: SPACING.lg,
     paddingBottom: SPACING.xl,
-    justifyContent: 'center',
   },
   title: {
     fontSize: 32,
@@ -104,7 +130,6 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     width: '100%',
-    alignItems: 'center',
     marginTop: SPACING.md,
   },
   forgotPasswordContainer: {
@@ -112,8 +137,8 @@ const styles = StyleSheet.create({
     marginTop: SPACING.lg,
   },
   forgotPasswordText: {
-    fontSize: 14,
-    fontWeight: '600',
+    fontSize: 17,
+    fontWeight: '500',
     color: COLORS.primary,
   },
 });

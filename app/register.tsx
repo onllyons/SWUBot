@@ -1,7 +1,11 @@
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, KeyboardAvoidingView, Platform, TouchableOpacity, ScrollView } from 'react-native';
 import { useState } from 'react';
 import { useRouter } from 'expo-router';
 import { CheckSquare, Square } from 'lucide-react-native';
+
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { auth } from '../firebaseConfig';
+
 import Header from '@/components/Header';
 import FormInput from '@/components/FormInput';
 import Button from '@/components/Button';
@@ -14,7 +18,26 @@ export default function RegisterScreen() {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [keepSignedIn, setKeepSignedIn] = useState(false);
 
-  const handleSignUp = () => {
+  const handleSignUp = async () => {
+    if (!email || !password || !confirmPassword) {
+      alert('Please fill all fields');
+      return;
+    }
+    if (password !== confirmPassword) {
+      alert('Passwords do not match');
+      return;
+    }
+
+    try {
+      await createUserWithEmailAndPassword(auth, email, password);
+      alert('Account created successfully!');
+      router.replace('/swubot'); // sau orice ecran după sign up
+    } catch (error) {
+      if (error.code === 'auth/email-already-in-use') alert('Email already in use');
+      else if (error.code === 'auth/invalid-email') alert('Invalid email');
+      else if (error.code === 'auth/weak-password') alert('Weak password');
+      else alert('Sign up failed: ' + error.message);
+    }
   };
 
   const handleSignInPress = () => {
@@ -22,7 +45,10 @@ export default function RegisterScreen() {
   };
 
   return (
-    <View style={styles.container}>
+    <KeyboardAvoidingView
+      style={styles.container}
+      behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+    >
       <Header />
       <ScrollView
         contentContainerStyle={styles.scrollContent}
@@ -94,7 +120,7 @@ export default function RegisterScreen() {
           </View>
         </View>
       </ScrollView>
-    </View>
+    </KeyboardAvoidingView>
   );
 }
 
@@ -109,7 +135,6 @@ const styles = StyleSheet.create({
   content: {
     flex: 1,
     paddingHorizontal: SPACING.lg,
-    paddingTop: SPACING.lg,
     paddingBottom: SPACING.xl,
   },
   title: {
@@ -140,7 +165,6 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     width: '100%',
-    alignItems: 'center',
     marginTop: SPACING.md,
   },
   footer: {
@@ -149,12 +173,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   footerText: {
-    fontSize: 14,
+    fontSize: 17,
     color: COLORS.textLight,
   },
   footerLink: {
-    fontSize: 14,
-    fontWeight: '600',
+    fontSize: 17,
+    fontWeight: '500',
     color: COLORS.primary,
   },
 });
