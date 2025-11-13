@@ -2,7 +2,7 @@
   "expo": {
     "name": "SWUBot",
     "slug": "swubot",
-    "version": "42.0.2",
+    "version": "42.0.9",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "userInterfaceStyle": "light",
@@ -13,8 +13,9 @@
     ],
     "ios": {
       "bundleIdentifier": "com.standwithus.swubot",
+      "googleServicesFile": "./GoogleService-Info.plist",
       "supportsTablet": true,
-      "buildNumber": "46",
+      "buildNumber": "52",
       "infoPlist": {
         "NSCameraUsageDescription": "Camera is used only for user-uploaded content or QR scanning.",
         "NSPhotoLibraryUsageDescription": "Used for selecting profile or chat-related images.",
@@ -24,12 +25,14 @@
     },
     "android": {
       "package": "com.standwithus.swubot2",
-      "versionCode": 10,
+      "versionCode": 12,
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/icon.png",
         "backgroundColor": "#ffffff"
       },
-      "permissions": []
+      "permissions": [
+        "com.google.android.gms.permission.AD_ID"
+      ]
     },
     "web": {
       "bundler": "metro",
@@ -48,7 +51,16 @@
       "router": {}
     },
     "updates": {
-      "fallbackToCacheTimeout": 0
+      "url": "https://u.expo.dev/303ebf10-1d70-472b-8855-359a02add917",
+      "enabled": true,
+      "fallbackToCacheTimeout": 3000,
+      "checkAutomatically": "ON_LOAD",
+      "requestHeaders": {
+        "expo-channel-name": "production"
+      }
+    },
+    "runtimeVersion": {
+      "policy": "appVersion"
     }
   }
 }

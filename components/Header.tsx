@@ -8,17 +8,15 @@ export default function Header() {
 
   const handleBackPress = () => {
     try {
-      if (router && typeof router.back === 'function') {
+      if (router.canGoBack?.()) {
         router.back();
       } else {
-        router.replace('/home');
+        router.push('/home');
       }
-    } catch (error) {
-      router.replace('/home');
+    } catch {
+      router.push('/home');
     }
   };
-
-
 
   return (
     <View style={styles.header}>

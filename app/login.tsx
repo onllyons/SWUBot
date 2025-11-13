@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, TouchableOpacity, KeyboardAvoidingView, Platform, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, Image, TouchableOpacity, KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard, Platform, ScrollView } from 'react-native';
 import { useState } from 'react';
 import { useRouter } from 'expo-router';
 
@@ -15,7 +15,7 @@ export default function LoginScreen() {
   const router = useRouter();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-
+ 
   const handleLogin = async () => {
     if (!email || !password) {
       alert('Please enter email and password');
@@ -25,7 +25,7 @@ export default function LoginScreen() {
     try {
       await signInWithEmailAndPassword(auth, email, password);
       alert('Login successful!');
-      router.replace('/swubot'); // sau pagina principală după login
+      router.replace('/home');
     } catch (error) {
       if (error.code === 'auth/invalid-email') alert('Invalid email');
       else if (error.code === 'auth/user-not-found') alert('User not found');
@@ -47,6 +47,7 @@ export default function LoginScreen() {
   // };
 
   return (
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
     <KeyboardAvoidingView
       style={styles.container}
       behavior={Platform.OS === 'ios' ? 'padding' : undefined}
@@ -54,9 +55,17 @@ export default function LoginScreen() {
       <ScrollView
         contentContainerStyle={styles.scrollContent}
         showsVerticalScrollIndicator={false}
+        keyboardShouldPersistTaps="handled"
       >
         <View style={styles.content}>
-          <Text style={styles.title}>Welcome Back</Text>
+
+          <Image
+            source={require('../assets/images/swu-bot.png')}
+            style={styles.image}
+            resizeMode="contain"
+          />
+
+          <Text style={styles.title}>Welcome Back!</Text>
           <Text style={styles.subtitle}>Sign in to your account</Text>
 
           <View style={styles.form}>
@@ -109,6 +118,7 @@ export default function LoginScreen() {
         </View>
       </ScrollView>
     </KeyboardAvoidingView>
+    </TouchableWithoutFeedback>
   );
 }
 
@@ -140,6 +150,11 @@ const styles = StyleSheet.create({
   },
   form: {
     width: '100%',
+  },
+  image: {
+    width: 100,
+    height: 100,
+    marginBottom: SPACING.xs,
   },
   buttonContainer: {
     width: '100%',

@@ -80,6 +80,8 @@ export default function SWUBotScreen() {
       {/* webview */}
       <View style={styles.webviewContainer}>
         <WebView
+          incognito={true}
+          key={user ? user.uid : 'logged-out'}
           source={{ uri: 'https://chatbase.co/chatbot-iframe/7MCQ5NGEaFRzsodSq-G6n' }}
           style={styles.webview}
         />
@@ -93,7 +95,7 @@ export default function SWUBotScreen() {
         >
           <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
             <View style={styles.modalContainer}>
-              <Text style={styles.modalTitle}>Report an Issue</Text>
+              <Text style={styles.modalTitle}>Report an Issue.</Text>
               <TextInput
                 style={styles.textarea}
                 placeholder="Describe the issue..."
@@ -122,7 +124,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     paddingHorizontal: SPACING.md,
-    paddingVertical: SPACING.sm,
+    // paddingVertical: SPACING.sm,
     borderBottomWidth: 1,
     borderBottomColor: COLORS.border,
     paddingTop: Platform.OS === 'ios' ? SPACING.sm + SPACING.sm + + SPACING.xs + SPACING.xs : SPACING.md,
