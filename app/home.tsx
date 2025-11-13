@@ -110,7 +110,7 @@ export default function HomeScreen() {
                 <Text style={styles.deleteLink}>My Profile</Text>
               </TouchableOpacity>
 
-              <TouchableOpacity style={styles.test} onPress={() => Linking.openURL('https://botdelete.paperform.co/')}>
+              <TouchableOpacity style={styles.test} onPress={() => Linking.openURL('https://userdata.paperform.co/')}>
                 <Text style={styles.linkText}>Delete Account</Text>
               </TouchableOpacity>
 
