@@ -114,11 +114,11 @@ export default function HomeScreen() {
                 <Text style={styles.linkText}>Delete Account</Text>
               </TouchableOpacity>
 
-              <TouchableOpacity style={styles.test} onPress={() => Linking.openURL('https://docs.google.com/document/d/1KGLF27e2W_CLrBDOLuns5wnyoZyWyiW0MhArbOOz0Ao/edit?usp=sharing')}>
+              <TouchableOpacity style={styles.test} onPress={() => Linking.openURL('https://swubotpolicy.paperform.co/')}>
                 <Text style={styles.linkText}>Privacy Policy</Text>
               </TouchableOpacity>
 
-              <TouchableOpacity style={styles.test} onPress={() => Linking.openURL('https://docs.google.com/forms/d/e/1FAIpQLSfLaKKmX7IY6anjbTe1nBS5H7WyUqeWNFQ8xhId8agmOY_mHA/formResponse')}>
+              <TouchableOpacity style={styles.test} onPress={() => Linking.openURL('https://userdata.paperform.co/')}>
                 <Text style={styles.linkText}>User Data Deletion</Text>
               </TouchableOpacity>
 
